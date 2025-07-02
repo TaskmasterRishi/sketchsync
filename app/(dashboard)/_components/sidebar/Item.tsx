@@ -38,13 +38,14 @@ const Item = ({ id, name, imageUrl }: ItemPops) => {
       <Image
         src={imageUrl}
         alt={name}
-        width={80}
-        height={80}
+        width={48}
+        height={48}
         onClick={onClick}
         className={cn(
-          "rounded-md cursor-pointer opacity-75 hover:opacity-100 transition-all duration-300 border-2 border-transparent hover:border-gray-300",
-          isActive && "opacity-100 border-blue-500 shadow-md"
+          "rounded-md cursor-pointer opacity-75 hover:opacity-100 transition-opacity duration-200 border-2 border-transparent hover:border-red-500 focus:ring-2 focus:ring-blue-500",
+          isActive && "opacity-100 ring-2 ring-white hover:border-transparent"
         )}
+        aria-label={name}
       />
       </Hint>
     </div>

@@ -2,7 +2,7 @@ import React from 'react'
 
 const DashboardPage = () => {
   return (
-    <div>Dashboard</div>
+    <div className='h-[200vh]'>Dashboard</div>
   )
 }
 

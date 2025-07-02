@@ -20,9 +20,10 @@ export default function RootLayout({
         <link rel="icon" href="/logo.ico" />
       </head>
       <body>
-        
         <ClerkProvider>
-        <ConvexClientProvider>{children}</ConvexClientProvider>
+          <ConvexClientProvider>
+            
+            {children}</ConvexClientProvider>
         </ClerkProvider>
       </body>
     </html>
