@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import "./globals.css";
-import { ConvexClientProvider } from "@/providers/ConvvexProvider";
+import { ClerkProvider } from "@clerk/nextjs";
+import ConvexClientProvider from "@/providers/ConvvexProvider";
 
 export const metadata: Metadata = {
   title: "SketchSync",
@@ -19,7 +20,10 @@ export default function RootLayout({
         <link rel="icon" href="/logo.ico" />
       </head>
       <body>
+        
+        <ClerkProvider>
         <ConvexClientProvider>{children}</ConvexClientProvider>
+        </ClerkProvider>
       </body>
     </html>
   );
