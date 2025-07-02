@@ -1,9 +1,6 @@
 import type { Metadata } from "next";
 import "./globals.css";
-import {
-  ClerkProvider,
-} from "@clerk/nextjs";
-import ConvexClientProvider from "@/providers/ConvvexProvider";
+import { ConvexClientProvider } from "@/providers/ConvvexProvider";
 
 export const metadata: Metadata = {
   title: "SketchSync",
@@ -17,16 +14,13 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <ClerkProvider>
-      <html lang="en">
-        <head>
-          <link rel="icon" href="/logo.ico" />
-        </head>
-        <body>
-          
-          <ConvexClientProvider>{children}</ConvexClientProvider>
-        </body>
-      </html>
-    </ClerkProvider>
+    <html lang="en">
+      <head>
+        <link rel="icon" href="/logo.ico" />
+      </head>
+      <body>
+        <ConvexClientProvider>{children}</ConvexClientProvider>
+      </body>
+    </html>
   );
 }
