@@ -13,11 +13,7 @@ export function SearchInput() {
   const [debouncedValue] = useDebounce(value, 500);
 
   const placeholders = [
-    "What's the first rule of Fight Club?",
-    "Who is Tyler Durden?",
-    "Where is Andrew Laeddis Hiding?",
-    "Write a Javascript method to reverse a string",
-    "How to assemble your own PC?",
+    "Type to search"
   ];
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {

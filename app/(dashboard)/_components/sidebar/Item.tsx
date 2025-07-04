@@ -3,11 +3,6 @@ import { cn } from "@/lib/utils";
 import { useOrganization, useOrganizationList } from "@clerk/nextjs";
 import Image from "next/image";
 import React from "react";
-import {
-  Tooltip,
-  TooltipContent,
-  TooltipTrigger,
-} from "@/components/ui/tooltip";
 import Hint from "@/components/Hint";
 
 interface ItemPops {
