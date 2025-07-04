@@ -1,8 +1,30 @@
+'use client'
 import Image from 'next/image'
 import React from 'react'
 import { motion } from 'framer-motion'
+import { api } from '@/convex/_generated/api'
+import { useOrganization } from '@clerk/nextjs'
+import { Button } from '@/components/ui/button'
+import { useApiMutation } from '@/hooks/useApiMutation'
+import { Loader2 } from 'lucide-react'
+import { toast } from 'sonner'
 
 const EmptyBoard = () => {
+    const {organization} = useOrganization();
+    const {mutate, pending} = useApiMutation(api.board.create)
+
+    const onClick = () => {
+        if(!organization) return;
+        mutate({
+            title: "Untitled",
+            orgId: organization.id
+        })
+        .then((id) => {
+            toast.success("Board Created")
+        })
+        .catch(() => toast.error("Failed to craete a board"))
+    }
+
   return (
     <motion.div
       initial={{ opacity: 0, y: 20 }}
@@ -23,6 +45,18 @@ const EmptyBoard = () => {
       <p className="text-muted-foreground text-lg mt-3 text-center max-w-md">
         Create a new board to get started
       </p>
+      <div className="mt-6">
+        <Button size="lg" onClick={onClick} disabled={pending}>
+          {pending ? (
+            <>
+              <Loader2 className="h-4 w-4 mr-2 animate-spin" />
+              Creating...
+            </>
+          ) : (
+            'Create Board'
+          )}
+        </Button>
+      </div>
     </motion.div>
   )
 }
