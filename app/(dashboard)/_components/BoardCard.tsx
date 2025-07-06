@@ -12,6 +12,9 @@ import {
 } from "@/components/ui/card";
 import { format } from "date-fns";
 import { Ellipsis, Star, X } from "lucide-react";
+import Link from "next/link";
+import { useAuth } from "@clerk/nextjs";
+import { Skeleton } from "@/components/ui/skeleton";
 
 interface BoardCardProps {
   id: string;
@@ -36,7 +39,8 @@ const BoardCard = ({
 }: BoardCardProps) => {
   const [isStarFilled, setIsStarFilled] = React.useState(isFavorite);
   const [isRotated, setIsRotated] = React.useState(false);
-
+  const { userId } = useAuth();
+  const authLable = userId === authorId ? "you" : authorName;
   const toggleStar = () => {
     setIsStarFilled(!isStarFilled);
   };
@@ -48,13 +52,14 @@ const BoardCard = ({
       transition={{ duration: 0.1 }}
       whileHover={{
         scale: 1.05,
-        boxShadow: "0px 10px 20px rgba(0, 0, 0, 0.1)",
+        boxShadow: "0px 10px 10px rgba(0, 0, 0, 0.15)",
+        borderRadius: "1rem",
       }}
     >
       <Card>
         <CardHeader>
           <CardTitle>{title}</CardTitle>
-          <CardDescription>{authorName}</CardDescription>
+          <CardDescription>{authLable}</CardDescription>
           <CardAction>
             <div className="flex gap-4">
               <motion.div
@@ -67,9 +72,9 @@ const BoardCard = ({
                     rotate: isStarFilled ? [0, 180, 360] : 0,
                     color: isStarFilled ? "#FFD700" : "currentColor",
                     scale: isStarFilled ? [1, 1.2, 1] : 1,
-                    y: isStarFilled ? [0,-11, 0] : [0,-10, 0],
+                    y: isStarFilled ? [0, -11, 0] : [0, -10, 0],
                   }}
-                  transition={{ 
+                  transition={{
                     rotate: { duration: 0.5 },
                     scale: { duration: 0.3, repeat: 1, repeatType: "reverse" },
                     y: { duration: 0.3, ease: "easeOut" },
@@ -77,6 +82,7 @@ const BoardCard = ({
                 >
                   <Star
                     className="w-5 h-5"
+                    onClick={onclick}
                     fill={isStarFilled ? "currentColor" : "none"}
                   />
                 </motion.div>
@@ -109,17 +115,20 @@ const BoardCard = ({
             </div>
           </CardAction>
         </CardHeader>
-        <CardContent>
-          <Image
-            src={imageUrl}
-            alt={title}
-            width={400}
-            height={400}
-            className="w-full h-[200px] object-cover"
-          />
-        </CardContent>
+        <Link href={`board/${id}`}>
+          <CardContent>
+            <Image
+              src={imageUrl}
+              alt={title}
+              width={400}
+              height={400}
+              className="w-full h-[250px] lg:h-[150px] object-cover object-left-top"
+            />
+          </CardContent>
+        </Link>
+
         <CardFooter>
-          <p>{format(new Date(createdAt), "MMM d, yyyy")}</p>
+          <p>{format(new Date(createdAt), "MMM d, yyyy 'at' h:mm a")}</p>
         </CardFooter>
       </Card>
     </motion.div>
@@ -127,3 +136,32 @@ const BoardCard = ({
 };
 
 export default BoardCard;
+
+BoardCard.Skeleton = function BoardCardSkeleton() {
+  return (
+    <motion.div
+      initial={{ opacity: 0, y: 20 }}
+      animate={{ opacity: 1, y: 0 }}
+      transition={{ duration: 0.1 }}
+    >
+      <Card>
+        <CardHeader>
+          <Skeleton className="h-6 w-3/4" />
+          <Skeleton className="h-4 w-1/2 mt-2" />
+          <CardAction>
+            <div className="flex gap-4">
+              <Skeleton className="h-5 w-5 rounded-full" />
+              <Skeleton className="h-5 w-5 rounded-full" />
+            </div>
+          </CardAction>
+        </CardHeader>
+        <CardContent>
+          <Skeleton className="w-full h-[150px]" />
+        </CardContent>
+        <CardFooter>
+          <Skeleton className="h-4 w-1/3" />
+        </CardFooter>
+      </Card>
+    </motion.div>
+  );
+};
