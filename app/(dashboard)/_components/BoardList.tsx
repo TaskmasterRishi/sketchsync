@@ -4,10 +4,8 @@ import EmptyBoard from "./EmptyBoard";
 import EmptyFavorite from "./EmptyFavorite";
 import { useQuery } from "convex/react";
 import { api } from "@/convex/_generated/api";
-import { Loader2 } from "lucide-react";
 import BoardCard from "./BoardCard";
 import NewBoardBtn from "./NewBoardBtn";
-import { Skeleton } from "@/components/ui/skeleton";
 
 interface BoardListProps {
   orgId: string;
@@ -18,7 +16,7 @@ interface BoardListProps {
 }
 
 const BoardList = ({ orgId, query }: BoardListProps) => {
-  const data = useQuery(api.boards.get, { orgId });
+  const data = useQuery(api.boards.get, { orgId ,search : query.search});
 
   if (data === undefined) {
     return (
@@ -72,22 +70,24 @@ const BoardList = ({ orgId, query }: BoardListProps) => {
         
         <NewBoardBtn orgId={orgId} disabled={false}/>
 
-        {data.map((board) => {
-          return (
-            <BoardCard
-              key={board._id}
-              id={board._id}
-              title={board.title}
-              imageUrl={board.imageUrl}
-              authorId={board.authorId}
-              authorName={board.authorName}
-              //@ts-ignore
-              createdAt={board._creationTime}
-              orgId={board.orgId}
-              isFavorite={board.isFavorite}
-            />
-          );
-        })}
+        {data
+          .filter((board) => !query.favorites || board.isFavorite)
+          .map((board) => {
+            return (
+              <BoardCard
+                key={board._id}
+                id={board._id}
+                title={board.title}
+                imageUrl={board.imageUrl}
+                authorId={board.authorId}
+                authorName={board.authorName}
+                //@ts-ignore
+                createdAt={board._creationTime}
+                orgId={board.orgId}
+                isFavorite={board.isFavorite}
+              />
+            );
+          })}
       </div>
     </div>
   );
