@@ -120,7 +120,7 @@ const BoardCard = ({
             </div>
           </CardAction>
         </CardHeader>
-        <Link href={`board/${id}`}>
+        <Link href={`../board/${id}`}>
           <CardContent>
             <Image
               src={imageUrl}

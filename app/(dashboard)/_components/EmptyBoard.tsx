@@ -8,8 +8,10 @@ import { Button } from '@/components/ui/button'
 import { useApiMutation } from '@/hooks/useApiMutation'
 import { Loader2 } from 'lucide-react'
 import { toast } from 'sonner'
+import { useRouter } from 'next/router'
 
 const EmptyBoard = () => {
+  const router = useRouter();
     const {organization} = useOrganization();
     const {mutate, pending} = useApiMutation(api.board.create)
 
@@ -21,6 +23,7 @@ const EmptyBoard = () => {
         })
         .then((id) => {
             toast.success("Board Created")
+            router.push(`/boards/${id}`)
         })
         .catch(() => toast.error("Failed to craete a board"))
     }
