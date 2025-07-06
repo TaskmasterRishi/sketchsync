@@ -37,7 +37,7 @@ const NewButton = ({ text }: NewButtonProps) => {
           </Hint>
         </div>
       </DialogTrigger>
-      <DialogContent className="bg-transparent border-none shadow-none p-0">
+      <DialogContent className="bg-transparent border-none shadow-none p-0" isXVisible={false}>
         <VisuallyHidden>
           <DialogTitle>Create Organization</DialogTitle>
         </VisuallyHidden>
