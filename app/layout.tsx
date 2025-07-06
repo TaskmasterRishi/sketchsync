@@ -3,6 +3,7 @@ import "./globals.css";
 import { ClerkProvider } from "@clerk/nextjs";
 import ConvexClientProvider from "@/providers/ConvvexProvider";
 import { Toaster } from "@/components/ui/sonner";
+import ModalProvider from "@/providers/ModalProvider";
 
 export const metadata: Metadata = {
   title: "SketchSync",
@@ -24,6 +25,7 @@ export default function RootLayout({
         <ClerkProvider>
           <ConvexClientProvider>
             <Toaster/>
+            <ModalProvider/>
             {children}</ConvexClientProvider>
         </ClerkProvider>
       </body>

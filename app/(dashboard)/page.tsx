@@ -3,6 +3,7 @@ import React from "react";
 import EmptyOrg from "./_components/EmptyOrg";
 import { useOrganization } from "@clerk/nextjs";
 import BoardList from "./_components/BoardList";
+import Loader from "@/components/auth/Loader";
 
 interface DashboardPageProps {
   searchParams: {
@@ -12,11 +13,15 @@ interface DashboardPageProps {
 }
 
 const DashboardPage = ({ searchParams }: DashboardPageProps) => {
-  const { organization } = useOrganization();
+  const { organization, isLoaded } = useOrganization();
 
   // Unwrap searchParams with React.use()
   //@ts-ignore
   const params = React.use(searchParams);
+
+  if (!isLoaded) {
+    return <Loader />;
+  }
 
   return (
     <div className=" flex-1 h-[calc(100%-80px)] p-6">
