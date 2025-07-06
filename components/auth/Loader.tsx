@@ -12,7 +12,6 @@ const Loader = () => {
       <motion.div
         animate={{
           scale: [1, 1.2, 1],
-          rotate: [0, 180, 360],
         }}
         transition={{
           duration: 1.5,

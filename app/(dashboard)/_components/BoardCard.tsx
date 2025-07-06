@@ -16,6 +16,9 @@ import Link from "next/link";
 import { useAuth } from "@clerk/nextjs";
 import { Skeleton } from "@/components/ui/skeleton";
 import { Actions } from "@/components/actions";
+import { useApiMutation } from "@/hooks/useApiMutation";
+import { api } from "@/convex/_generated/api";
+import { toast } from "sonner";
 
 interface BoardCardProps {
   id: string;
@@ -39,11 +42,32 @@ const BoardCard = ({
   isFavorite,
 }: BoardCardProps) => {
   const [isStarFilled, setIsStarFilled] = React.useState(isFavorite);
-  const [isRotated, setIsRotated] = React.useState(false);
   const { userId } = useAuth();
   const authLable = userId === authorId ? "you" : authorName;
-  const toggleStar = () => {
+
+  const { mutate: onFavorite, pending: pendingFavorite } = useApiMutation(
+    api.board.favorites
+  );
+
+  const { mutate: onUnfavorite, pending: pendingUnfavorite } = useApiMutation(
+    api.board.unFavorites
+  );
+
+  const toggleStar = (e: React.MouseEvent) => {
+    e.stopPropagation();
+    e.preventDefault();
+
+    console.log("Toggling star. Current isFavorite:", isFavorite);
     setIsStarFilled(!isStarFilled);
+    if (isFavorite) {
+      console.log("Calling onUnfavorite with id:", id);
+      onUnfavorite({ id })
+        .catch(() => toast.error("Failed to Unfavorite"));
+    } else {
+      console.log("Calling onFavorite with id and orgId:", id, orgId);
+      onFavorite({ id, orgId })
+        .catch(() => toast.error("Failed to Favorite"));
+    }
   };
 
   return (
@@ -83,7 +107,10 @@ const BoardCard = ({
                 >
                   <Star
                     className="w-5 h-5"
-                    onClick={onclick}
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      toggleStar(e);
+                    }}
                     fill={isStarFilled ? "currentColor" : "none"}
                   />
                 </motion.div>

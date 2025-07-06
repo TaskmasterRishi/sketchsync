@@ -73,7 +73,6 @@ const BoardList = ({ orgId, query }: BoardListProps) => {
         <NewBoardBtn orgId={orgId} disabled={false}/>
 
         {data.map((board) => {
-          console.log("Image URL:", board.imageUrl);
           return (
             <BoardCard
               key={board._id}
@@ -85,7 +84,7 @@ const BoardList = ({ orgId, query }: BoardListProps) => {
               //@ts-ignore
               createdAt={board._creationTime}
               orgId={board.orgId}
-              isFavorite={false}
+              isFavorite={board.isFavorite}
             />
           );
         })}
