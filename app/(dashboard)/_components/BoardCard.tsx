@@ -88,9 +88,9 @@ const BoardCard = ({
           <CardAction>
             <div className="flex gap-4">
               <motion.div
-                whileTap={{ scale: 0.9 }}
-                onClick={toggleStar}
-                style={{ cursor: "pointer" }}
+                whileTap={{ scale: pendingFavorite || pendingUnfavorite ? 1 : 0.9 }}
+                onClick={pendingFavorite || pendingUnfavorite ? undefined : toggleStar}
+                style={{ cursor : "pointer" }}
               >
                 <motion.div
                   animate={{
@@ -107,10 +107,6 @@ const BoardCard = ({
                 >
                   <Star
                     className="w-5 h-5"
-                    onClick={(e) => {
-                      e.stopPropagation();
-                      toggleStar(e);
-                    }}
                     fill={isStarFilled ? "currentColor" : "none"}
                   />
                 </motion.div>
