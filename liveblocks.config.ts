@@ -1,11 +1,5 @@
 // Define Liveblocks types for your application
 // https://liveblocks.io/docs/api-reference/liveblocks-react#Typing-your-data
-import {createClient} from "@liveblocks/client"
-
-const cliebt = createClient({
-  publicApiKey:"pk_dev_ZxmrWsO4WZS45BKH3ToyXw2AsjvHJXu5xHp2CPowxRApSsJHC4WD6C9IO5zXpSRP",
-})
-
 declare global {
   interface Liveblocks {
     // Each user's Presence, for useMyPresence, useOthers, etc.
