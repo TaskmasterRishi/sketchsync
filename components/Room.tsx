@@ -14,11 +14,10 @@ interface RoomProps {
 }
 
 export function Room({ children, roomId, fallback }: RoomProps) {
+
   return (
     <LiveblocksProvider
-      publicApiKey={
-        "pk_dev_ZxmrWsO4WZS45BKH3ToyXw2AsjvHJXu5xHp2CPowxRApSsJHC4WD6C9IO5zXpSRP"
-      }
+      authEndpoint={"/api/liveblocks-auth"}
     >
       <RoomProvider id={roomId}>
         <ClientSideSuspense fallback={fallback}>
