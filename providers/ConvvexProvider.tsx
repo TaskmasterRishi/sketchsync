@@ -21,9 +21,7 @@ export default function ConvexClientProvider({
     <ClerkProvider>
       <ConvexProviderWithClerk client={convex} useAuth={useAuth}>
         {children}
-        <AuthLoading>
-          <Loader/>
-        </AuthLoading>
+
       </ConvexProviderWithClerk>
     </ClerkProvider>
   );

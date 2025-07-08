@@ -10,12 +10,12 @@ interface CanvasProps {
 
 const Canvas = ({boardId} : CanvasProps) => {
   return (
-    <div className="h-full w-ful border-2 bg-neutral-100 touch-none rounded-md shadow-sm">
+    <main className="h-full w-ful border-2 bg-neutral-100 touch-none rounded-md shadow-sm">
       {/* Canvas content will go here */}
       <Info/>
       <Participants/>
       <Toolbar/>
-    </div>
+    </main>
   )
 }
 

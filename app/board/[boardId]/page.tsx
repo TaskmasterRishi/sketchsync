@@ -1,6 +1,8 @@
 "use client";
 import React from "react";
 import Canvas from "./_component/Canvas";
+import { Room } from "@/components/Room";
+import Loading from "./_component/Loading";
 
 interface BoardIdPageProps {
   params: {
@@ -10,15 +12,15 @@ interface BoardIdPageProps {
 
 const BoardIdPage = ({ params }: BoardIdPageProps) => {
   //@ts-ignore
-  const unwrappedParams = React.use(params); // Unwrap the params Promise
+  const resolvedParams = React.use(params);
+  //@ts-ignore
+  const boardId = resolvedParams.boardId;
+
   return (
     <div>
-      <Canvas
-        boardId={
-          //@ts-ignore
-          unwrappedParams.boardId
-        }
-      />
+      <Room roomId={boardId} fallback={<Loading />}>
+        <Canvas boardId={boardId} />
+      </Room>
     </div>
   );
 };
